@@ -15,7 +15,8 @@ import helmet from "helmet";
 import config from "config";
 import passport from "passport";
 import session from "express-session";
-
+import { sequelize } from "@/config/sequelize.config";
+import { appPort } from "@/config/envVar";
 export default class App {
   public app: express.Application;
   public port: string | number;
@@ -23,7 +24,7 @@ export default class App {
 
   constructor(Controllers: Function[]) {
     this.app = express();
-    this.port = process.env.PORT || 4000;
+    this.port = appPort || 4000;
     this.env = process.env.NODE_ENV || "development";
     this.connectToDatabase();
 
@@ -60,7 +61,14 @@ export default class App {
 
 
   private async connectToDatabase() {
-   
+    try {
+        await sequelize.authenticate();
+        // todo: replace by logging tool
+        console.log('💿 Connection has been established successfully.');
+      } catch (error) {
+        // todo: replace by logging tool
+        console.error('💥 Unable to connect to the database:', error);
+      }
   }
 
   private initializeRoutes(controllers: Function[]) {

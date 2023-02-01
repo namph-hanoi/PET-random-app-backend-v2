@@ -1,4 +1,4 @@
-process.env['NODE_CONFIG_DIR'] = __dirname + '/config';
+process.env['NODE_CONFIG_DIR'] = process.cwd() + '/config';
 
 import 'dotenv/config';
 import 'reflect-metadata';
