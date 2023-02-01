@@ -1,0 +1,109 @@
+import express from "express";
+import { Container } from "typedi";
+import path from "path";
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import {
+  useExpressServer,
+  getMetadataArgsStorage,
+  useContainer,
+  Action,
+} from "routing-controllers";
+import hpp from "hpp";
+import cors from "cors";
+import helmet from "helmet";
+import config from "config";
+import passport from "passport";
+import session from "express-session";
+
+export default class App {
+  public app: express.Application;
+  public port: string | number;
+  public env: string;
+
+  constructor(Controllers: Function[]) {
+    this.app = express();
+    this.port = process.env.PORT || 4000;
+    this.env = process.env.NODE_ENV || "development";
+    this.connectToDatabase();
+
+    this.initializeMiddlewares();
+
+    this.initializeRoutes(Controllers);
+    this.initializePassport();
+  }
+
+  private initializeMiddlewares() {
+    this.app.use(hpp());
+    this.app.use(compression());
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser());
+    this.app.use(express.static("public"));
+    this.app.use(cors());
+    this.app.use(helmet());
+    this.app.use(
+      session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true },
+      })
+    );
+  }
+
+  private initializePassport() {
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
+  }
+
+
+
+  private async connectToDatabase() {
+   
+  }
+
+  private initializeRoutes(controllers: Function[]) {
+    useContainer(Container);
+    useExpressServer(this.app, {
+      cors: {
+        // origin: config.get("cors.origin"),
+        // credentials: config.get("cors.credentials"),
+      },
+      routePrefix: "/api",
+      middlewares: [path.join(__dirname + "/middlewares/*{.ts,.js}")],
+      controllers: [path.join(__dirname + "/**/*{.controller.ts,.js}")],
+      interceptors: [path.join(__dirname + "/interceptors/*{.ts,.js}")],
+      defaultErrorHandler: false,
+    //   authorizationChecker: async (action: Action, roles: string[]) => {
+    //     const bearer = action.request.headers["authorization"];
+    //     if (bearer) {
+    //       const token = bearer.split(" ")[1];
+    //       const user = await verifyAccessToken(token);
+    //       logger.info(`user: ${user}`);
+    //       if (user && !roles.length) return true;
+    //     }
+
+    //     // if (user && roles.find((role) => user.roles.indexOf(role) !== -1))
+    //     //   return true;
+    //     return false;
+    //   },
+    //   currentUserChecker: async (action: Action) => {
+    //     const bearer = action.request.headers["authorization"];
+    //     if (bearer) {
+    //       const token = bearer.split(" ")[1];
+    //       const params = await verifyAccessToken(token);
+    //       const user = Account.findOneBy({ id: params.id });
+    //       return user;
+    //     }
+    //     return false;
+    //   },
+    });
+  }
+
+  public listen() {
+    this.app.listen(this.port, () => {
+        console.log('🤟 Listening on port ', this.port)
+    });
+  }
+}
