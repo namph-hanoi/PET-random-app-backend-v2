@@ -41,6 +41,7 @@ export default class App {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(express.static("public"));
+    // Todo: apply corsOptionsDelegate, more info: https://www.npmjs.com/package/cors
     this.app.use(cors());
     this.app.use(helmet());
     this.app.use(
@@ -78,9 +79,9 @@ export default class App {
         // origin: config.get("cors.origin"),
         // credentials: config.get("cors.credentials"),
       },
-      routePrefix: "/api",
+      routePrefix: "/api/v1",
       middlewares: [path.join(__dirname + "/middlewares/*{.ts,.js}")],
-      controllers: [path.join(__dirname + "/**/*{.controller.ts,.js}")],
+      controllers: [path.join(__dirname + "/components/**/*{.controller.ts,.js}")],
       interceptors: [path.join(__dirname + "/interceptors/*{.ts,.js}")],
       defaultErrorHandler: false,
     //   authorizationChecker: async (action: Action, roles: string[]) => {
