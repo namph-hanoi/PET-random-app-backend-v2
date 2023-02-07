@@ -32,6 +32,7 @@
     "passport": "^0.6.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.28.0",
+    "sequelize-typescript": "^2.1.5",
     "slugify": "^1.6.5",
     "typescript": "^4.9.5",
     "uuid": "^9.0.0"
@@ -74,6 +75,7 @@
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.10.1",
     "routing-controllers-openapi": "^4.0.0",
+    "sequelize-typescript-migration-lts": "^3.2.5",
     "swagger-ui-express": "^4.6.0",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.1.2",

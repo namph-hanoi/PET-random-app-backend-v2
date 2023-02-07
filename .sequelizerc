@@ -1,0 +1,21 @@
+const path = require('path');
+const { readdirSync } = require('fs');
+const { join } = require('path');
+const { exec } = require('child_process');
+
+const modelsPath = exec("find . -name '*.model.ts'", (error, stdout, stderr) => {
+  if (error) {
+    console.error(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.error(`stderr: ${stderr}`);
+  if (stdout) return stdout.toString().split('\n').slice(0, -1);
+});
+
+// console.log("🚀 ~ file: .sequelizerc:3 ~ readdirSync", abc)
+
+module.exports = {
+  'config': path.resolve('src', 'config', 'sequelize.config.js'),
+  'migrations-path': path.resolve('db', 'migrations')
+};

@@ -15,7 +15,7 @@ import helmet from "helmet";
 import config from "config";
 import passport from "passport";
 import session from "express-session";
-import { sequelize } from "@/config/sequelize.config";
+import { connectDB } from "@/config/sequelize.connection";
 import { appPort } from "@/config/envVar";
 export default class App {
   public app: express.Application;
@@ -63,7 +63,7 @@ export default class App {
 
   private async connectToDatabase() {
     try {
-        await sequelize.authenticate();
+        await connectDB();
         // todo: replace by logging tool
         console.log('💿 Connection has been established successfully.');
       } catch (error) {
