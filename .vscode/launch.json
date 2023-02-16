@@ -11,7 +11,12 @@
             "port": 9229,
             "restart": true,
             "stopOnEntry": false,
-            "protocol": "inspector"
-        }
+            "protocol": "inspector",
+            "debug.javascript.terminalOptions": {
+                "skipFiles": [
+                  "node_modules/**"
+                ]
+            }
+        },
     ]
 }

@@ -2,6 +2,7 @@ import config from 'config';
 
 /**
  * Database variables
+ * 
  */
 export const dbHost = process.env.DB_HOST || config.get('db.host');
 export const dbPort = process.env.DB_PORT || config.get('db.port');
@@ -13,7 +14,7 @@ export const dbType = process.env.DB_TYPE || config.get('db.type');
 /**
  * App variables
  */
-export const appPort = process.env.DB_TYPE || config.get('server.port');
+export const appPort = process.env.APP_PORT || config.get('server.port');
 
 
 export default {

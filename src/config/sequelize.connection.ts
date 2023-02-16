@@ -7,7 +7,7 @@ import {
   dbHost,
   dbType
 } from './envVar';
-import User from '@/components/User/User.model';
+import User from '@/components/User/user.model';
 
 export const connectDB = async () => {
   const sequelize = new Sequelize({

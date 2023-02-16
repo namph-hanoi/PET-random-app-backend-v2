@@ -12,10 +12,20 @@ interface PersonCreationAttributes extends Optional<PersonAttributes, 'id'> {}
 })
 export default class User extends Model<PersonAttributes, PersonCreationAttributes> {
 
-  @Column
+  @Column({
+    unique: true,
+    validate: {
+      len: [8, 50]
+    }
+  })
   userName: string;
 
-  @Column
+  @Column({
+    unique: true,
+    validate: {
+      len: [8, 50]
+    }
+  })
   email: string;
 
   @Column

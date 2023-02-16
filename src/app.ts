@@ -81,7 +81,7 @@ export default class App {
       },
       routePrefix: "/api/v1",
       middlewares: [path.join(__dirname + "/middlewares/*{.ts,.js}")],
-      controllers: [path.join(__dirname + "/components/**/*{.controller.ts,.js}")],
+      controllers: [path.join(__dirname + "/components/**/*{controller.ts,controller.js}")],
       interceptors: [path.join(__dirname + "/interceptors/*{.ts,.js}")],
       defaultErrorHandler: false,
     //   authorizationChecker: async (action: Action, roles: string[]) => {
