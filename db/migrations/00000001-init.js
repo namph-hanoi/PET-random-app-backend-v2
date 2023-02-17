@@ -78,11 +78,11 @@ const migrationCommands = [
                 },
                 "userName": {
                     "unique": true,
-                    "type": Sequelize.STRING
+                    "type": Sequelize.STRING(50)
                 },
                 "email": {
                     "unique": true,
-                    "type": Sequelize.STRING
+                    "type": Sequelize.STRING(100)
                 },
                 "password": {
                     "type": Sequelize.STRING
