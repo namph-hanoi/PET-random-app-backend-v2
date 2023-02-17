@@ -1,5 +1,7 @@
 import { Optional } from 'sequelize';
-import { Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt } from 'sequelize-typescript';
+import { Table, Column, Model, Default } from 'sequelize-typescript';
+import { getCurrentUnixTime } from '@/helpers/miscellaneous';
+
 interface PersonAttributes {
   id: number;
   name: string;
@@ -23,7 +25,7 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
   @Column({
     unique: true,
     validate: {
-      len: [8, 50]
+      len: [8, 100]
     }
   })
   email: string;
@@ -31,12 +33,14 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
   @Column
   password: string
 
-  @CreatedAt
+  @Default(getCurrentUnixTime())
+  @Column
   creationDate: BigInt;
 
-  @UpdatedAt
+  @Default(getCurrentUnixTime())
+  @Column
   updatedOn: BigInt;
 
-  @DeletedAt
+  @Column
   deletionDate: BigInt;
 }
