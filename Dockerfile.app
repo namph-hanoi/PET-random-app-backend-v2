@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 3005
 
 # Define environment variables
-ENV NODE_ENV=developement
+ENV NODE_ENV=development
 ENV PORT=3005
 
 # Start the application

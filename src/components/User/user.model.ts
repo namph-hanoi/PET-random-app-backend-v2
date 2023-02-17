@@ -9,8 +9,8 @@ interface PersonAttributes {
 
 interface PersonCreationAttributes extends Optional<PersonAttributes, 'id'> {}
 @Table({
-  paranoid: true,
-  tableName: 'users'
+  tableName: 'users',
+  timestamps: false,
 })
 export default class User extends Model<PersonAttributes, PersonCreationAttributes> {
 
@@ -35,12 +35,12 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
 
   @Default(getCurrentUnixTime())
   @Column
-  creationDate: BigInt;
+  createdAt: BigInt;
 
   @Default(getCurrentUnixTime())
   @Column
-  updatedOn: BigInt;
+  updatedAt: BigInt;
 
   @Column
-  deletionDate: BigInt;
+  deletedAt: BigInt;
 }
