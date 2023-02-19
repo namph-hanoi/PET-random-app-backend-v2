@@ -11,15 +11,19 @@ import {
     Res,
     UseBefore,
   } from "routing-controllers";
-  
+import UserRepository from './user.repository';
+import CreateUserDto from "./dtos/create-user.dto";
 @Service()
-@Controller("/user")
 export class UserService {
+  constructor(private userRepository: UserRepository) {}
   @Post("/create")
-  async create() {
-    
-    // validate
-    // find if exist
-    // create new user
+  async create(createUserDTO: CreateUserDto) {
+    const { email } = createUserDTO;
+    const user = await this.userRepository.findOne({ email });
+    if (!!user || user !== null) {
+      throw Error(`User with email of ${user.email} already existed`);
+    }
+    const result = await this.userRepository.create(createUserDTO);
+    return result;
   }
 }

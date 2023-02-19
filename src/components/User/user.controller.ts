@@ -25,10 +25,7 @@ export class UserController {
     @Body()
     createUser: CreateUserDto
   ) {
-
+    this.userService.create(createUser)
     console.log(["🚀 ~ file: user.controller.ts:23 ~ UserController ~ create ~ createUser 233", createUser, this.userService]);
-    // validate
-    // find if exist
-    // create new user
   }
 }
