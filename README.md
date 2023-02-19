@@ -4,6 +4,7 @@
 - The migration file will be auto-gen when adding new model to the sequelize.connection
 - ❗️ REMEMBER to try to migrate down to check if the migration functions work well both ways
 - ❗️ Auto-gen migration files are NOT always correct, use the files which already commited in the git.
+- Run the migartion inside the container due to the docker network
 
 ## Done:
 - Handle error globally

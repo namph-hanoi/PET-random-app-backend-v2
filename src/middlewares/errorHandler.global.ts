@@ -9,7 +9,7 @@ export class ErrorHandler implements ExpressErrorMiddlewareInterface {
   error(errorObject: any, request: any, response: any, next: (err: any) => any) {
     // console.error(`💥 error: ${errorObject}`);
     const { errors } = errorObject;
-    if (errors.length && errors[0] instanceof ValidationError) {
+    if (errors?.length && errors[0] instanceof ValidationError) {
       const errorDetails = errors.map((err: ValidationError) => {
         return {
           field: err.property,
