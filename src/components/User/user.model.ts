@@ -34,7 +34,6 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
   @Column
   password: string
 
-  @Default(getCurrentUnixTime())
   @Column
   createdAt: BigInt;
 
@@ -49,5 +48,10 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
   @BeforeCreate
   static async hashPassword(user: User) {
     user.password = await encryptPassword(user.password);
+  }
+
+  @BeforeCreate
+  static createdAt(user: User) {
+    user.createdAt = BigInt(getCurrentUnixTime());
   }
 }
