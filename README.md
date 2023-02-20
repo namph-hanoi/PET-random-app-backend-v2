@@ -9,6 +9,7 @@
 - ❗️ REMEMBER to try to migrate down to check if the migration functions work well both ways
 - ❗️ Auto-gen migration files are NOT always correct, use the files which already commited in the git.
 - Run the migartion inside the container due to the docker network
+- ❗️ Mind the path on the production mode, it could be different
 
 ## Done:
 - Handle error globally
