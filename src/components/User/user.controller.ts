@@ -21,11 +21,10 @@ export class UserController {
   constructor(private userService: UserService) {}
   @Post("/register")
   async create(
-    @ValidateReqBody(CreateUserDto)
-    @Body()
+    @Body({ required: true})
     createUser: CreateUserDto
   ) {
-    this.userService.create(createUser)
+    return this.userService.create(createUser)
     console.log(["🚀 ~ file: user.controller.ts:23 ~ UserController ~ create ~ createUser 233", createUser, this.userService]);
   }
 }

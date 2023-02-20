@@ -1,3 +1,7 @@
+## Common Guide:
+- Run ```docker-compose start db```
+- Run ```yarn dev```
+
 ## Notice:
 - 'config' folder at cwd is for the npm config lib
 - Main env variables file in the config, the .env is for migration cli
@@ -21,4 +25,5 @@
 - Change all console into winston
 
 ## WIP:
-- Write authentication services
+- Write authentication services:
+  + Response
