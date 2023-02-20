@@ -17,12 +17,14 @@ import CreateUserDto from './dtos/create-user.dto';
 import { ValidateReqBody } from "@/decorators/validateReqBody";
 import { UserService } from "./user.service";
 import ForgetPasswordDTO from "./dtos/forget-password.dto";
+import ResetPasswordDTO from "./dtos/reset-password.dto";
 
 @Service()
 @Controller("/user")
 export class UserController {
   constructor(private userService: UserService) {}
 
+  // Todo: turn code into variables
   @HttpCode(201)
   @Post("/register")
   async create(
@@ -39,5 +41,16 @@ export class UserController {
     forgetPasswordDTO: ForgetPasswordDTO
   ) {
     return this.userService.sendForgetPasswordToken(forgetPasswordDTO);
+  }
+
+  @HttpCode(200)
+  @Post('/reset-password')
+  async resetPassword(
+    @QueryParam('token')
+    token: string,
+    @Body()
+    resetPasswordDTO: ResetPasswordDTO
+  ) {
+    return this.userService.resetPassword(token, resetPasswordDTO);
   }
 }
