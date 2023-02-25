@@ -2,7 +2,7 @@ import { Model } from 'sequelize';
 import { instanceToPlain } from 'class-transformer';
 
 // Inspired by APS flask backend
-export function BaseRepository(model: Model<any, any>) {
+export function BaseRepository(model: any) {
   return function (constructor: Function) {
     const _this = constructor.prototype;
     _this.model = model

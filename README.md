@@ -18,6 +18,8 @@
 - Docker-compose setup
 
 ## To do:
+- Warn and prevent commit when:
+  + Unused variables
 - Setup the entrypoint and the CMD for the docker container
 - Setup tests
 - Rename the nested config folder which makes tsc confused while compiling.

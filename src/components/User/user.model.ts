@@ -35,14 +35,14 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
   password: string
 
   @Column
-  createdAt: BigInt;
+  createdAt: number;
 
   @Default(getCurrentUnixTime())
   @Column
-  updatedAt: BigInt;
+  updatedAt: number;
 
   @Column
-  deletedAt: BigInt;
+  deletedAt: number;
 
   @BeforeUpdate
   @BeforeCreate
@@ -52,6 +52,6 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
 
   @BeforeCreate
   static createdAt(user: User) {
-    user.createdAt = BigInt(getCurrentUnixTime());
+    user.createdAt = getCurrentUnixTime();
   }
 }

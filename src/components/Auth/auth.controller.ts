@@ -1,22 +1,27 @@
 import { Service } from "typedi";
 import {
-    Authorized,
     Body,
     Controller,
-    CurrentUser,
-    Get,
-    Param,
+    HttpCode,
     Post,
-    Req,
     Res,
-    UseBefore,
   } from "routing-controllers";
-  
+import { AuthService } from './auth.service';
+import LoginDTO from "./dtos/login.dto";
+import { Response } from "express";
 @Service()
 @Controller("/auth")
 export class AuthController {
+  constructor(private authService: AuthService){}
+
+  @HttpCode(200)
   @Post("/login")
-  async login() {
-    console.log('🤟 Logged in')
+  async login(
+    @Body()
+    loginDTO: LoginDTO,
+    @Res()
+    response: Response
+  ) {
+    return await this.authService.login(loginDTO, response);  
   }
 }

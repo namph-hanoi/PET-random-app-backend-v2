@@ -7,5 +7,6 @@ import UserModel from './user.model';
 @Service()
 @BaseRepository(UserModel)
 export default class UserRepository {
-  
+  create: Function
+  findOne: Function
 }
