@@ -6,10 +6,14 @@
   "author": "Nam Phan <namph.tech@gmail.com>",
   "license": "MIT",
   "private": true,
+  "_moduleAliases": {
+    "@": "dist"
+  },
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --inspect=9229 --transpile-only src/server.ts",
-    "build": "tsc && npx tsc-alias"
+    "dev": "docker-compose start db && ts-node-dev -r tsconfig-paths/register --respawn --inspect=9229 --transpile-only src/server.ts",
+    "build": "rm -rf dist && tsc --project tsconfig.json",
+    "build:w": "tsc && (concurrently \"tsc -w\" \"npx nodemon dist/server\")"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
@@ -75,6 +79,7 @@
     "helmet": "^6.0.1",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.0",
+    "module-alias": "^2.2.2",
     "morgan": "^1.10.0",
     "passport-local": "^1.0.0",
     "pg": "^8.9.0",
