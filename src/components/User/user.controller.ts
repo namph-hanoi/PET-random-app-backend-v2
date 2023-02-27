@@ -31,6 +31,7 @@ export class UserController {
     @Body({ required: true})
     createUser: CreateUserDto
   ) {
+    // Todo: check if only the root user (new spec), then allow to create admin...
     return await this.userService.create(createUser);
   }
 

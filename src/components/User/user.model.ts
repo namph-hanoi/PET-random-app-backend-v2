@@ -2,10 +2,12 @@ import { Optional } from 'sequelize';
 import { Table, Column, Model, Default, BeforeUpdate, BeforeCreate } from 'sequelize-typescript';
 import { getCurrentUnixTime } from '@/helpers/miscellaneous';
 import { encryptPassword } from '@/helpers/passwordAlgo';
+import { userRoles } from './dtos/create-user.dto';
 
 interface PersonAttributes {
   id: number;
   name: string;
+  role: string;
 }
 
 interface PersonCreationAttributes extends Optional<PersonAttributes, 'id'> {}
@@ -43,6 +45,15 @@ export default class User extends Model<PersonAttributes, PersonCreationAttribut
 
   @Column
   deletedAt: number;
+
+  @Default(userRoles[0])
+  @Column({
+    validate: {
+      // bug in sequelize
+      isIn: [userRoles] as readonly any[]
+    }
+  })
+  role: string;
 
   @BeforeUpdate
   @BeforeCreate

@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import UserRepository from './user.repository';
-import CreateUserDto from "./dtos/create-user.dto";
+import CreateUserDto, { userRoles } from "./dtos/create-user.dto";
 import ForgetPasswordDTO from "./dtos/forget-password.dto";
 import * as jwt from 'jsonwebtoken';
 import ResetPasswordDTO from "./dtos/reset-password.dto";
@@ -20,12 +20,8 @@ export class UserService {
     if (!!user || user !== null) {
       throw Error(`User with email of ${user.email} already existed`);
     }
-    // Todo: check if the global error catch the correct error to remove try catch block here
-    try {
-      await this.userRepository.create(createUserDTO);
-    } catch (error) {
-      console.error(`Error: ${error}`);
-    }
+
+    await this.userRepository.create(createUserDTO);
     return 'User has been created';
   }
 

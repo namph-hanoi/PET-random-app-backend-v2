@@ -1,4 +1,6 @@
-import { IsOptional, IsNotEmpty, Matches, MaxLength, MinLength } from "class-validator";
+import { IsOptional, IsNotEmpty, Matches, MaxLength, MinLength, IsIn } from "class-validator";
+
+export const userRoles = ['user', 'admin', 'root'];
 
 export default class CreateUserDto {
   @IsOptional()
@@ -19,4 +21,7 @@ export default class CreateUserDto {
   })
   password: string;
 
+  @IsOptional()
+  @IsIn(userRoles, {message: 'The role is not defined'})
+  role: string
 }
