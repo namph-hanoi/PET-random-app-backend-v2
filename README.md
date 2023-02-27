@@ -26,6 +26,7 @@
 
 - Copy the eslint, prettierrc ... from a NestJS project
 - Change all console into winston
+- Consider to merge all migration files to one
 
 ## WIP:
 - Write authentication services:

@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "_moduleAliases": {
-    "@": "dist"
+    "@": "src"
   },
   "scripts": {
     "start": "node dist/server.js",
