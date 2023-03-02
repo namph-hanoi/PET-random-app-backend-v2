@@ -23,6 +23,7 @@
 - Setup the entrypoint and the CMD for the docker container
 - Setup tests
 - Rename the nested config folder which makes tsc confused while compiling.
+- Create decorator to transform the response (using class-transformẻ)
 
 - Copy the eslint, prettierrc ... from a NestJS project
 - Change all console into winston

@@ -14,6 +14,14 @@ export class UserService {
     return user;
   }
 
+  deriveDataFromToken(token: string) {
+    const { email, role } = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as jwt.JwtPayload;
+    return {
+      email,
+      role
+    };
+  }
+
   async create(createUserDTO: CreateUserDto): Promise<string> {
     const { email } = createUserDTO;
     const user = await this.findOne(email);
@@ -37,7 +45,7 @@ export class UserService {
   }
 
   async resetPassword(token: string, resetPasswordDTO: ResetPasswordDTO): Promise<string | undefined> {
-    const { email } = jwt.verify(token, process.env.JWT_SECRET_FORGET!) as jwt.JwtPayload;
+    const { email } = this.deriveDataFromToken(token);
     const user = await this.findOne(email);
     if (!user) throw Error(`Cannot find the user`);
 

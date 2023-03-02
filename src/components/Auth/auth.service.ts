@@ -13,8 +13,8 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  private generateToken(email: string) {
-    return jwt.sign({ email }, process.env.JWT_SECRET_AUTH!, { expiresIn: '15s'});
+  private generateToken(email: string, role: string) {
+    return jwt.sign({ email, role }, process.env.ACCESS_TOKEN_SECRET!, { expiresIn: process.env.ACCESS_TOKEN_LIFE_DURATION});
   } 
 
   async login(loginDTO: LoginDTO, response: Response) {
@@ -33,10 +33,12 @@ export class AuthService {
     // Todo: use asymetric SRA 256 for the authentication
     // Todo: save both hashed public key and hashed refresh token to the DB for frequent rotation
     if (!isAuthentic) throw new Error(`Fail login`)
-    const accessToken = this.generateToken(email);
-    const refreshToken = jwt.sign({ email }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: '5m'});
-    
+    const accessToken = this.generateToken(user.email, user.role);
+
+    // Todo: all the process.env go to the config file
+    const refreshToken = jwt.sign({ email }, process.env.REFRESH_TOKEN_SECRET!, { expiresIn: process.env.REFRESH_TOKEN_LIFE_DURATION});
     response.cookie(process.env.REFRESH_TOKEN_COOKIE_KEY!, refreshToken, { httpOnly: true, 
+      // Todo: secure will be turned on in production mode
       sameSite: 'none', /* secure: true, */ 
       maxAge: 24 * 60 * 60 * 1000 });
     return response.json({ accessToken });
@@ -50,7 +52,7 @@ export class AuthService {
     if (!user || user === null) throw Error(`Invalid refresh token`);
 
     return {
-      accessToken: this.generateToken(user.email),
+      accessToken: this.generateToken(user.email, user.role),
     }
   }
 }

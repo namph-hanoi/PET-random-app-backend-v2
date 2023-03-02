@@ -17,6 +17,7 @@ import passport from "passport";
 import session from "express-session";
 import { connectDB } from "@/config/sequelize.connection";
 import { appPort } from "@/config/envVar";
+import { UserService } from "./components/User/user.service";
 export default class App {
   public app: express.Application;
   public port: string | number;
@@ -84,29 +85,29 @@ export default class App {
       controllers: [path.join(__dirname + "/components/**/*{controller.ts,controller.js}")],
       interceptors: [path.join(__dirname + "/interceptors/*{.ts,.js}")],
       defaultErrorHandler: false,
-    //   authorizationChecker: async (action: Action, roles: string[]) => {
-    //     const bearer = action.request.headers["authorization"];
-    //     if (bearer) {
-    //       const token = bearer.split(" ")[1];
-    //       const user = await verifyAccessToken(token);
-    //       logger.info(`user: ${user}`);
-    //       if (user && !roles.length) return true;
-    //     }
-
-    //     // if (user && roles.find((role) => user.roles.indexOf(role) !== -1))
-    //     //   return true;
-    //     return false;
-    //   },
-    //   currentUserChecker: async (action: Action) => {
-    //     const bearer = action.request.headers["authorization"];
-    //     if (bearer) {
-    //       const token = bearer.split(" ")[1];
-    //       const params = await verifyAccessToken(token);
-    //       const user = Account.findOneBy({ id: params.id });
-    //       return user;
-    //     }
-    //     return false;
-    //   },
+      authorizationChecker: async (action: Action, roles: string[]) => {
+        const bearer = action.request.headers["authorization"];
+        if (bearer) {
+          const token = bearer.split(" ")[1];
+          // find user
+          const userService: UserService = Container.get(UserService);
+          const { role } = userService.deriveDataFromToken(token);
+          if (roles.includes(role)) {
+            return true;
+          // logger.info(`email: ${email}`);
+          }
+        }
+        return false;
+      },
+      currentUserChecker: async (action: Action) => {
+        const bearer = action.request.headers["authorization"];
+        if (bearer) {
+          const token = bearer.split(" ")[1];
+          // find user
+          const userService: UserService = Container.get(UserService);
+          const { email } = userService.deriveDataFromToken(token);
+          return await userService.findOne(email);
+      }}
     });
   }
 
