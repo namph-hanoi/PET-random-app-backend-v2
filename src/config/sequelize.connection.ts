@@ -20,7 +20,7 @@ export const connectDB = async () => {
     models: [User]
   } as SequelizeOptions);
 
-  // Todo: turn of on production deployment
+  // Todo: turn off on production deployment
   try {
     const result = await SequelizeTypescriptMigration.makeMigration(sequelize, {
       outDir: `${process.cwd()}/db/migrations`,

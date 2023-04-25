@@ -9,7 +9,7 @@ import User from "./user.model";
 export class UserService {
   constructor(private userRepository: UserRepository) {}
 
-  async findOne(email: string): Promise<User> {
+  public async findOne(email: string): Promise<User> {
     const user = await this.userRepository.findOne({ email });
     return user;
   }

@@ -4,13 +4,15 @@ import { getCurrentUnixTime } from '@/helpers/miscellaneous';
 import { encryptPassword } from '@/helpers/passwordAlgo';
 import { userRoles } from './dtos/create-user.dto';
 
-interface PersonAttributes {
+export interface PersonAttributes {
   id: number;
-  name: string;
-  role: string;
+  userName: string;
+  role?: string;
+  email: string;
+  password: string;
 }
 
-interface PersonCreationAttributes extends Optional<PersonAttributes, 'id'> {}
+export interface PersonCreationAttributes extends Optional<PersonAttributes, 'id'> {}
 @Table({
   tableName: 'users',
   timestamps: false,

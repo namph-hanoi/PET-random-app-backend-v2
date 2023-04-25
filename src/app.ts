@@ -16,7 +16,7 @@ import config from "config";
 import passport from "passport";
 import session from "express-session";
 import { connectDB } from "@/config/sequelize.connection";
-import { appPort } from "@/config/envVar";
+import { appPort, nodeEnv } from "@/config/envVar";
 import { UserService } from "./components/User/user.service";
 export default class App {
   public app: express.Application;
@@ -26,7 +26,7 @@ export default class App {
   constructor(Controllers: Function[]) {
     this.app = express();
     this.port = appPort || 4000;
-    this.env = process.env.NODE_ENV || "development";
+    this.env = nodeEnv;
     this.connectToDatabase();
 
     this.initializeMiddlewares();
@@ -64,13 +64,14 @@ export default class App {
 
   private async connectToDatabase() {
     try {
-        await connectDB();
-        // todo: replace by logging tool
-        console.log('💿 Connection has been established successfully.');
-      } catch (error) {
-        // todo: replace by logging tool
-        console.error('💥 Unable to connect to the database:', error);
-      }
+      // todo: handle the connection error in test env
+      await connectDB();
+      // todo: replace by logging tool
+      console.log('💿 Connection has been established successfully.');
+    } catch (error) {
+      // todo: replace by logging tool
+      console.error('💥 Unable to connect to the database:', error);
+    }
   }
 
   private initializeRoutes(controllers: Function[]) {
@@ -113,7 +114,8 @@ export default class App {
 
   public listen() {
     // todo: setup gracefully shutdown process 
-    this.app.listen(this.port, () => {
+    // Pin: return app.listen for the test
+    return this.app.listen(this.port, () => {
         console.log('🤟 Listening on port ', this.port)
     });
   }

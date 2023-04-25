@@ -5,5 +5,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import App from '@/app';
 
-const app = new App([]);
-app.listen();
+export const app = new App([]);
+const server = app.listen();
+
+export default server;

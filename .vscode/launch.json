@@ -10,6 +10,13 @@
             "request": "attach",
             "port": 9229,
             "restart": true,
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceFolder}/dist/*.js",
+                "!**/node_modules/**"
+            ],
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": ".",
             "stopOnEntry": false,
             "protocol": "inspector",
             "debug.javascript.terminalOptions": {
