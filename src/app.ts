@@ -112,6 +112,7 @@ export default class App {
   }
 
   public listen() {
+    // todo: setup gracefully shutdown process 
     this.app.listen(this.port, () => {
         console.log('🤟 Listening on port ', this.port)
     });

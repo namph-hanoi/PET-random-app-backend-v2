@@ -11,7 +11,9 @@
   },
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "docker-compose start db && ts-node-dev -r tsconfig-paths/register --respawn --inspect=9229 --transpile-only src/server.ts",
+    "dev": "/app/node_modules/ts-node-dev/lib/bin.js -r tsconfig-paths/register --respawn --inspect=9229 --transpile-only src/server.ts",
+    "dev-legacy": "docker compose start db && ts-node-dev -r tsconfig-paths/register --respawn --inspect=9229 --transpile-only src/server.ts",
+    "debug-docker": "node -e \"setInterval(() => { console.log('Running...') }, 1000)\"",
     "build": "rm -rf dist && tsc --project tsconfig.json",
     "build:w": "tsc && (concurrently \"tsc -w\" \"npx nodemon dist/server\")"
   },

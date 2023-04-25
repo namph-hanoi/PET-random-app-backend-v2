@@ -1,5 +1,14 @@
 # Specify the base image
-FROM node:16-alpine
+FROM node:19-bullseye
+
+# For the psql commands
+RUN apt-get update -y \
+&& apt-get install -y libpq-dev \
+&& apt-get install -y postgresql-common \
+&& apt-get install -y postgresql-client \
+&& apt-get install -y locales \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/* \
 
 # Set the working directory
 WORKDIR /app
@@ -20,5 +29,15 @@ EXPOSE 3005
 ENV NODE_ENV=development
 ENV PORT=3005
 
+
+# locale setting for psql login
+RUN locale-gen en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    PYTHONIOENCODING=utf-8
+RUN localedef -f UTF-8 -i en_US en_US.utf8
+
 # Start the application
-CMD ["yarn", "dev"]
+RUN chmod +x scripts/entrypoint.dev.sh
+ENTRYPOINT ["scripts/entrypoint.dev.sh"]
