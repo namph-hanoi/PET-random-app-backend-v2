@@ -1,0 +1,32 @@
+import { Service } from "typedi";
+import {
+    Authorized,
+    Body,
+    Controller,
+    CurrentUser,
+    Get,
+    HttpCode,
+    Param,
+    Post,
+    QueryParam,
+    Req,
+    Res,
+    UseBefore,
+  } from "routing-controllers";
+import { {{ capitalize componentName }}Service } from "./{{ decapitalize componentName }}.service";
+
+@Service()
+@Controller("/{{ decapitalize apiBlueprint }}")
+export class {{ capitalize componentName }}Controller {
+  constructor(private {{ decapitalize componentName }}Service: {{ capitalize componentName}}Service) {}
+
+  @HttpCode(200)
+  @Post("/test")
+  async create(
+    @Body({ required: true})
+    create{{ properCase componentName }}: Create{{ capitalize componentName }}Dto
+  ) {
+    // Todo: check if only the root user (new spec), then allow to create admin...
+    return await this.{{ decapitalize componentName }}Service.create('test');
+  }
+}

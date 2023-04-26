@@ -1,0 +1,7 @@
+import { Service } from "typedi";
+import {{ capitalize componentName }}Repository from './{{ decapitalize componentName }}.repository';
+
+@Service()
+export class {{ capitalize componentName }}Service {
+  constructor(private {{ decapitalize componentName }}Repository: {{ capitalize componentName }}Repository) {}
+}

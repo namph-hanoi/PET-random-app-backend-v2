@@ -1,0 +1,10 @@
+import { BaseRepository } from "@/decorators/baseRepository";
+import { Service } from "typedi";
+import {{  capitalize componentName }}Model from './{{ decapitalize componentName }}.model';
+
+@Service()
+@BaseRepository({{  capitalize componentName }}Model)
+export default class {{  capitalize componentName }}Repository {
+  create: Function
+  findOne: Function
+}

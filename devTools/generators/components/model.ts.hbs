@@ -1,0 +1,53 @@
+import { Optional } from 'sequelize';
+import { Table, Column, Model, Default, BeforeUpdate, BeforeCreate } from 'sequelize-typescript';
+import { getCurrentUnixTime } from '@/helpers/miscellaneous';
+
+export interface {{ capitalize componentName }}Attributes {
+  {{#each columns}}
+  {{ this.name }}: {{ this.type }};
+  {{/each}}
+}
+
+export interface {{ capitalize componentName }}CreationAttributes extends Optional<{{ capitalize componentName }}Attributes, 'id'> {}
+@Table({
+  tableName: '{{ decapitalize tableName }}',
+  timestamps: false,
+})
+export default class {{ capitalize tableName }} extends Model<{{ capitalize componentName }}Attributes, {{ capitalize componentName }}CreationAttributes> {
+  
+  // @Default('default value')
+  // @Column({
+  //   unique: true,
+  //   validate: {
+  //     len: [8, 50]
+  //   }
+  // })
+  // example: string;
+
+  {{#each columns}}
+  @Column
+  {{ this.name }}: {{ this.type }};
+  {{/each}}
+
+  @Column
+  createdAt: number;
+
+  @Default(getCurrentUnixTime())
+  @Column
+  updatedAt: number;
+
+  @Column
+  deletedAt: number;
+
+  @BeforeCreate
+  static createdAt({{ decapitalize tableName }}: {{ capitalize tableName }}) {
+    {{ decapitalize tableName }}.createdAt = getCurrentUnixTime();
+  }
+
+  // Some function needs 2 hooks decorated
+  // @BeforeUpdate
+  // @BeforeCreate
+  // static async hashPassword({{ decapitalize componentName }}: {{ capitalize componentName }}) {
+  //   {{ decapitalize componentName }}.password = await encryptPassword({{ decapitalize componentName }}.password);
+  // }
+};
