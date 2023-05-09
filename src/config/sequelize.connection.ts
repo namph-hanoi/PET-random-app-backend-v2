@@ -10,13 +10,16 @@ import {
 import User from '@/components/User/user.model';
 
 export const connectDB = async () => {
+  if (process.env.NODE_ENV === 'TEST') {
+    return new Sequelize('sqlite::memory:');
+  }
+
   const sequelize = new Sequelize({
     username: dbUser,
     password: dbPassword,
     database: dbName,
     host: dbHost,
     dialect: dbType,
-    // models: [__dirname + '../components/**/**.model.ts'],
     models: [User]
   } as SequelizeOptions);
 
@@ -29,7 +32,8 @@ export const connectDB = async () => {
     });
     console.log(result);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
+  return sequelize;
 }
 

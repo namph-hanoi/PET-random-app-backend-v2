@@ -8,6 +8,7 @@ import createMockedUser from './__mock__/user';
 import { UserService } from '@/components/User/user.service';
 import injector from 'typedi';
 import User from '@/components/User/user.model';
+import { connectDB } from '@/config/sequelize.connection';
 
 chai.use(chaiHttp);
 
@@ -20,11 +21,13 @@ describe('(I&T Tests) Testing auth/login routes', () => {
 
   describe('Route GET', () => {
     before(async () => {
+      const sequelize = await connectDB();
       const mockedUser = await createMockedUser({
         userName: 'Nam Phan',
         email: 'namph.tech@gmail.com',
         password: 'vvvvvvvv',
-      })
+        role: 'admin',
+      }, sequelize)
       sinon
         .stub(userService, 'findOne')
         .resolves(mockedUser as User)
